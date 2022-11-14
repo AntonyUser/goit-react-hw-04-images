@@ -1,25 +1,21 @@
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
 import { useEffect } from 'react';
 import css from './Modal.module.css';
 
 export const Modal = ({ img: { largeImageURL, user }, closeModal }) => {
-  const onCloseByEscape = useCallback(
-    e => {
+  useEffect(() => {
+    const onCloseByEscape = e => {
       if (e.code === 'Escape') {
         closeModal();
       }
-    },
-    [closeModal]
-  );
+    };
 
-  useEffect(() => {
     window.addEventListener('keydown', onCloseByEscape);
 
     return () => {
       window.removeEventListener('keydown', onCloseByEscape);
     };
-  }, [onCloseByEscape]);
+  }, [closeModal]);
 
   const onClosebyBackdrop = e => {
     if (e.target === e.currentTarget) {
